@@ -79,6 +79,7 @@ import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationExceptio
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.nio.ShortBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -482,6 +483,25 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
     Frame frame;
     try {
       frame = session.update();
+      try {
+        Image depthImage = frame.acquireDepthImage();
+
+        int width = depthImage.getWidth();
+        int height = depthImage.getHeight();
+
+        ShortBuffer buffer = depthImage.getPlanes()[0].getBuffer().asShortBuffer();
+
+        int centerIndex = (height / 2) * width + (width / 2);
+        short depthMillimeters = buffer.get(centerIndex);
+
+        float depthMeters = depthMillimeters / 1000.0f;
+
+        Log.d("ARCORE_DEPTH", "Center depth: " + depthMeters + " meters");
+
+        depthImage.close();
+      } catch (NotYetAvailableException e) {
+        // Expected early on
+      }
     } catch (CameraNotAvailableException e) {
       Log.e(TAG, "Camera not available during onDrawFrame", e);
       messageSnackbarHelper.showError(this, "Camera not available. Try restarting the app.");

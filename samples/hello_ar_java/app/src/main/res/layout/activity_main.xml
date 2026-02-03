@@ -23,12 +23,22 @@
       android:id="@+id/surfaceview"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
-      android:layout_gravity="top"/>
+      android.layout_gravity="top"/>
+
+  <TextView
+      android:id="@+id/depthText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentTop="true"
+      android:layout_centerHorizontal="true"
+      android:layout_margin="25dp"
+      android:textColor="@android:color/white"
+      android:textSize="16sp" />
 
   <ImageButton
       android:id="@+id/settings_button"
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      android.layout_height="wrap_content"
       android:layout_alignParentEnd="true"
       android:layout_alignParentTop="true"
       android:layout_margin="25dp"
